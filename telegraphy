@@ -1,0 +1,26 @@
+type Keys = keyof typeof actionMap
+type actionTypes = typeof actionMap[Keys]
+
+const actionA = (param: number) => {
+  //does some action A
+  console.log(param)
+}
+
+const actionB = (param: number) => {
+  //does some action B
+  console.log(param)
+}
+
+const actionMap = {
+  ActionA: actionA
+  ActionB: actionB
+}
+
+export class ActionFactory {
+  static getAction(key: Keys): Extract<(param: string | number) => void, actionTypes> {
+    return actionMap[key]
+  }
+}
+
+const newAction = ActionFactory.getAction('ActionA')
+newAction('Some Payload')
